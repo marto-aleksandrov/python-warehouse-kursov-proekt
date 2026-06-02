@@ -2,32 +2,31 @@
 models.py
 ---------
 Дефинира класовете за системата за складова наличност.
-Defines the data model for a simple warehouse / inventory system.
 """
 
 
 class Product:
-    """A single product stored in the warehouse."""
+    """Единична стока, съхранявана в склада."""
 
     def __init__(self, name, quantity, price, category="General"):
-        # Constructor (the 'self' method required by the assignment).
+        # Конструктор (методът 'self', изискван от заданието).
         self.name = name
         self.quantity = quantity
         self.price = price
         self.category = category
 
     def total_value(self):
-        """Method 1: total stock value of this product (quantity * price)."""
+        """Метод 1: обща стойност на стоката (количество * цена)."""
         return self.quantity * self.price
 
     def is_low_stock(self, threshold=5):
-        """Method 2: True if the stock is at or below the threshold."""
+        """Метод 2: True, ако наличността е под или равна на прага."""
         return self.quantity <= threshold
 
     def restock(self, amount):
-        """Method 3: add units to the current quantity."""
+        """Метод 3: добавя бройки към текущото количество."""
         if amount <= 0:
-            raise ValueError("Restock amount must be positive.")
+            raise ValueError("Количеството за зареждане трябва да е положително.")
         self.quantity += amount
         return self.quantity
 
@@ -36,25 +35,25 @@ class Product:
 
 
 class Warehouse:
-    """A warehouse that holds many Product objects."""
+    """Склад, който съдържа множество обекти от тип Product."""
 
     def __init__(self, name):
         self.name = name
         self.products = []
 
     def add_product(self, product):
-        """Add a Product object to the warehouse."""
+        """Добавя обект Product към склада."""
         self.products.append(product)
 
     def total_inventory_value(self):
-        """Sum the value of every product using a loop."""
+        """Сумира стойността на всяка стока чрез цикъл."""
         total = 0
         for product in self.products:
             total += product.total_value()
         return total
 
     def find_low_stock(self, threshold=5):
-        """Return all products that need reordering (loop + conditional)."""
+        """Връща всички стоки, които трябва да се поръчат (цикъл + условие)."""
         low = []
         for product in self.products:
             if product.is_low_stock(threshold):
@@ -62,9 +61,9 @@ class Warehouse:
         return low
 
     def sort_by_quantity(self, descending=False):
-        """Return products sorted by quantity."""
+        """Връща стоките, сортирани по количество."""
         return sorted(self.products, key=lambda p: p.quantity, reverse=descending)
 
     def sort_by_value(self, descending=True):
-        """Return products sorted by total stock value."""
+        """Връща стоките, сортирани по обща стойност."""
         return sorted(self.products, key=lambda p: p.total_value(), reverse=descending)

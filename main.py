@@ -3,9 +3,6 @@ main.py
 -------
 Използва класовете Product и Warehouse, за да реши конкретна задача:
 изграждане на склад, сортиране на стоките и откриване на ниски наличности.
-
-Uses the Product and Warehouse classes to solve a concrete task:
-build a warehouse, sort the stock, and detect low inventory.
 """
 
 from tabulate import tabulate
@@ -14,7 +11,7 @@ from models import Product, Warehouse
 
 
 def build_warehouse():
-    """Create a warehouse and fill it with sample products using a loop."""
+    """Създава склад и го запълва с примерни стоки чрез цикъл."""
     warehouse = Warehouse("Главен склад")
 
     sample_products = [
@@ -33,7 +30,7 @@ def build_warehouse():
 
 
 def print_table(products, title):
-    """Print a list of products as a formatted table."""
+    """Извежда списък със стоки като форматирана таблица."""
     print(f"\n{title}")
     rows = []
     for p in products:
@@ -49,15 +46,15 @@ def print_table(products, title):
 def main():
     warehouse = build_warehouse()
 
-    # 1) All products sorted by quantity (ascending).
+    # 1) Всички стоки, сортирани по количество (възходящо).
     print_table(warehouse.sort_by_quantity(),
                 "Стоки, сортирани по количество (възходящо):")
 
-    # 2) All products sorted by total value (descending).
+    # 2) Всички стоки, сортирани по обща стойност (низходящо).
     print_table(warehouse.sort_by_value(),
                 "Стоки, сортирани по обща стойност (низходящо):")
 
-    # 3) Find and report low-stock products (loop + conditional).
+    # 3) Намира и извежда стоките с ниска наличност (цикъл + условие).
     low_stock = warehouse.find_low_stock(threshold=5)
     print("\nСтоки с ниска наличност (<= 5 бройки):")
     if low_stock:
@@ -66,13 +63,13 @@ def main():
     else:
         print("  Няма стоки с ниска наличност.")
 
-    # 4) Restock the low-stock products and show the updated inventory.
+    # 4) Зарежда стоките с ниска наличност и показва обновената наличност.
     for product in low_stock:
         product.restock(20)
     print_table(warehouse.sort_by_quantity(),
                 "\nОбновена наличност (след зареждане с по 20 бройки):")
 
-    # 5) Total value of the whole warehouse.
+    # 5) Обща стойност на целия склад.
     print(f"\nОбща стойност на склада: {warehouse.total_inventory_value():.2f} лв.")
 
 
